@@ -1,5 +1,121 @@
-import {aleatorio} from './aleatorio.js';
-import {perguntas} from './perguntas.js';
+
+const perguntas = [
+    {
+        enunciado: "pergunta 1",
+        alternativas: [
+            {
+                texto: "nike",
+                afirmacao: [
+                    "você tem bom gosto",
+                    "afirmação 2"
+                ],
+                proxima: 1,
+            },
+            {
+                texto: "adidas",
+                afirmacao: [
+                    "você é vaiado",
+                    "você não sabe escolher"
+                ],
+                proxima: 1,
+            }
+         ]
+     },
+     {
+         enunciado: "pergunta 2",
+         alternativas: [
+             {
+                 texto: "nike",
+                 afirmacao: [
+                     "você tem bom gosto",
+                     "afirmação 2"
+                 ],
+                 proxima: 2,
+            },
+            {
+                 texto: "adidas",
+                 afirmacao: [
+                     "você é vaiado",
+                     "você não sabe escolher"
+                 ],
+                proxima: 2,
+      }
+    ]
+  },
+  {
+    enunciado: "pergunta 4",
+    alternativas: [
+      {
+        texto: "nike",
+        afirmacao: [
+          "você tem bom gosto",
+          "afirmação 2"
+        ],
+          proxima: 3,
+      },
+      {
+        texto: "adidas",
+        afirmacao: [
+          "você é vaiado",
+          "você não sabe escolher"
+        ],
+          proxima 3,
+      }
+    ]
+  },
+  {
+    enunciado: "Você prefere nike ou adidas?",
+    alternativas: [
+      {
+        texto: "nike",
+        afirmacao: [
+          "você tem bom gosto",
+          "afirmação 2"
+        ],
+          proxima: 4,
+      },
+      {
+        texto: "adidas",
+        afirmacao: [
+          "você é vaiado",
+          "você não sabe escolher"
+        ],
+          proxima: 4,
+      }
+    ]
+  },
+  {
+    enunciado: "pergunta 5",
+    alternativas: [
+      {
+        texto: "nike",
+        afirmacao: [
+          "você tem bom gosto",
+          "afirmação 2"
+        ],
+      },
+      {
+        texto: "adidas",
+        afirmacao: [
+          "você é vaiado",
+          "você não sabe escolher"
+        ],
+      }
+    ]
+  }
+]
+
+
+const nomes = ["Wesley", "Jucisvaldo", "Tonho", "Cleide", "Marcos", "Virginia"];
+
+function aleatorio (lista){
+    const posicao = Math.floor(Math.random()* lista.length);
+    return lista[posicao];
+}
+
+const nome = aleatorio(nomes)
+
+
 
 const caixaPrincipal = document.querySelector(".caixa-principal");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
@@ -14,15 +130,15 @@ let atual = 0;
 let perguntaAtual;
 let historiaFinal = "";
 
-botaoIniciar.addEventListener('click', iniciaJogo)
+botaoIniciar.addEventListener('click', iniciaJogo);
 
 function iniciaJogo() {
     atual = 0;
     historiaFinal = "";
-    telaInicial.computedStyleMap.display = 'none';
-    caixaPerguntas.classList.remove(".mostrar");
-    caixaAlternativas.classList.remove(".mostrar");
-    caixaResultado.classList.remove(".mostrar");
+    telaInicial.style.display = 'none';
+    caixaPerguntas.classList.remove("mostrar");
+    caixaAlternativas.classList.remove("mostrar");
+    caixaResultado.classList.remove("mostrar");
     mostraPergunta();
 }
 
@@ -31,29 +147,51 @@ function mostraPergunta() {
         mostraResultado();
         return;
     }
-perguntaAtual = perguntas[atual];
-caixaPerguntas.textContent = perguntaAtual.enunciado;
-caixaAlternativas.textContent = "";
-mostraAlternativas(;)
+    perguntaAtual = perguntas[atual];
+    caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = "";
+    mostraAlternativas();
 }
 
 function mostraAlternativas(){
     for(const alternativa of perguntaAtual.alternativas){
         const botaoAlternativas = document.createElement("button");
         botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click", ()=> respostaSelecionada(alternativa));~
+        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
         caixaAlternativas.appendChild(botaoAlternativas);
     }
 }
 
-function respostaSelecionada(opcaoSelecionada) {}
+function respostaSelecionada(opcaoSelecionada){
+    const afirmacoes = aleatorio(opcaoSelecionada.afirmacao);
+    historiaFinal += afirmacoes + " ";
+   if(opcaoSelecionada.proxima !== undefined) {
+       atual = opcaoSelecionada.proxima;
+   }else {
+       mostraResultado();
+       return;
+   }
+    mostraPergunta();
+}
 
-function mostraResultado() {
-    caixaPerguntas.textContent = 'Após tudo isso, ${nome} descobriu que';
+function mostraResultado(){
+    caixaPerguntas.textContent = `Após tudo isso, ${nome} descobriu que`;
     textoResultado.textContent = historiaFinal;
     caixaAlternativas.textContent = "";
-    caixaResultado.classList.add(".mostrar");
+    caixaResultado.classList.add("mostrar");
     botaoJogarNovamente.addEventListener("click", jogarNovamente);
 }
 
-function jogarNovamente() {}
+function jogarNovamente(){
+    atual = 0;
+    historiaFinal = "";
+    caixaResultado.classList.remove("mostrar");
+    mostraPergunta();
+}
+
+function substituiNome() {
+    for(const pergunta of perguntas) {
+        pergunta.enunciado = pergunta.enunciado.replace(/você/g, nome);
+    }
+}
+substituiNome();
