@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
- 
+
 :root {
     --cor-fundo: #d6f3e6;
     --cor-principal: #97b884;
@@ -18,7 +18,7 @@ body {
     min-height: 100vh;
 }
 
-.caixa principal{
+.caixa-principal {
     background-color: var(--cor-principal);
     width: 90%;
     max-width: 600px;
@@ -26,7 +26,7 @@ body {
     padding: 20px;
 }
 
-h1, . caixa-perguntas, .caixa-resultado {
+h1, .caixa-perguntas, .caixa-resultado {
     font-family: 'Chakra Petch' sans-serif;
 }
 
@@ -45,7 +45,7 @@ button {
 
 button:hover {
     background-color: var(--cor-destaque);
-    color: (--cor-principal);
+    color: var(--cor-principal);
 }
 
 .caixa-alternativas {
@@ -58,6 +58,6 @@ button:hover {
     display: none;
 }
 
-.caixa-resultado.mostrar{
+.caixa-resultado.mostrar {
     display: block;
 }
